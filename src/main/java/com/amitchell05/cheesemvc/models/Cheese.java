@@ -13,17 +13,16 @@ public class Cheese {
         return name;
     }
 
-    public void setName(String aName) {
-        name = aName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String aDescription) {
-        description = aDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
 
 }
