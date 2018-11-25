@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body>
+<body class="container body-content">
+
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
@@ -9,20 +10,15 @@
 <p th:unless="${cheeses} and ${cheeses.size()}">no cheese :(</p>
 
 <form method="post">
+
     <div th:each="cheese: ${cheeses}" class="checkbox">
-        <input type="checkbox" name="cheese" th:value="${cheese.key}"/>
-        <label th:text="${cheese.key}"></label>
+        <input type="checkbox" name="cheese" th:value="${cheese}" th:id="${cheese}"/>
+        <label th:for="${cheese}" th:text="${cheese}"></label>
         <br />
     </div>
 
     <input type="submit" value="Remove Cheese"/>
 </form>
-
-<!--<table>-->
-    <!--<tr th:each="cheese: ${cheeses}">-->
-        <!--<td th:text="${cheese.key}"></td>-->
-    <!--</tr>-->
-<!--</table>-->
 
 </body>
 </html>
