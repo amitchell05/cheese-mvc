@@ -4,7 +4,10 @@ import com.amitchell05.cheesemvc.models.Cheese;
 import com.amitchell05.cheesemvc.models.CheeseData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "cheese")
@@ -23,26 +26,28 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
+        model.addAttribute(new Cheese());
+//        // Same as this line of code:
+//        model.addAttribute("cheese", new Cheese());
+
         return "cheese/add";
     }
 
     @RequestMapping(value ="add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@ModelAttribute Cheese newCheese) {
+    public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese,
+                                       Errors errors, Model model) {
 
-        /*
-        *
-        * Cheese newCheese = new Cheese();
-        * newCheese.setName(Request.getParameter("name"));
-        * newCheese.setDescription(Request.getParameter("description"));
-        *
-        * */
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Cheese");
+            return "cheese/add";
+        }
 
         CheeseData.add(newCheese);
         return "redirect:";
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable int cheeseId) {
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable("cheeseId") int cheeseId) {
         model.addAttribute("cheese", CheeseData.getById(cheeseId));
         model.addAttribute("title", "Edit Cheese");
         return "cheese/edit/" + cheeseId;
