@@ -56,7 +56,7 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int cheeseId, String name, String description) {
+    public String processEditForm(int cheeseId, String name, String description) {
         Cheese currentCheese = CheeseData.getById(cheeseId);
         currentCheese.setName(name);
         currentCheese.setDescription(description);
