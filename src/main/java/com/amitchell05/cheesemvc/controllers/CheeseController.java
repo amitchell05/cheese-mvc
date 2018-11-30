@@ -2,6 +2,7 @@ package com.amitchell05.cheesemvc.controllers;
 
 import com.amitchell05.cheesemvc.models.Cheese;
 import com.amitchell05.cheesemvc.models.CheeseData;
+import com.amitchell05.cheesemvc.models.CheeseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -29,6 +30,7 @@ public class CheeseController {
         model.addAttribute(new Cheese());
 //        // Same as this line of code:
 //        model.addAttribute("cheese", new Cheese());
+        model.addAttribute("cheeseTypes", CheeseType.values());
 
         return "cheese/add";
     }
@@ -47,15 +49,18 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable("cheeseId") int cheeseId) {
+    public String displayEditForm(Model model, @PathVariable int cheeseId) {
         model.addAttribute("cheese", CheeseData.getById(cheeseId));
-        model.addAttribute("title", "Edit Cheese");
-        return "cheese/edit/" + cheeseId;
+        model.addAttribute("title", "Edit");
+        return "cheese/edit";
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description) {
-        return "redirect:";
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(@PathVariable int cheeseId, String name, String description) {
+        Cheese currentCheese = CheeseData.getById(cheeseId);
+        currentCheese.setName(name);
+        currentCheese.setDescription(description);
+        return "redirect:/cheese";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
