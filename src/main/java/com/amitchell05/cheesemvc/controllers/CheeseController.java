@@ -57,7 +57,7 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int cheeseId, String name, String description, CheeseType type, @ModelAttribute @Valid Cheese currentCheese,
+    public String processEditForm(@PathVariable int cheeseId, String name, String description, CheeseType type, String rating, @ModelAttribute @Valid Cheese currentCheese,
                                   Errors errors, Model model) {
 
         if (errors.hasErrors()) {
@@ -71,6 +71,8 @@ public class CheeseController {
         currentCheese.setName(name);
         currentCheese.setDescription(description);
         currentCheese.setType(type);
+        currentCheese.setRating(rating);
+
         return "redirect:/cheese";
     }
 
