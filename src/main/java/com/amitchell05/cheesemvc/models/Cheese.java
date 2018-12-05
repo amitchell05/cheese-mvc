@@ -3,6 +3,7 @@ package com.amitchell05.cheesemvc.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -14,18 +15,19 @@ public class Cheese {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15, message = "Name must not be empty or more than 15 characters long")
+    @Size(min=3, max=15, message = "Name must not be empty or be more than 15 characters long")
     private String name;
 
     @NotNull
     @Size(min=1, message = "Description must not be empty")
     private String description;
 
-    private CheeseType type;
-
     @NotNull
-    @Size(min=1, max=5, message = "Rating must not be empty or more than 5 characters long")
+    @Size(min=1, max=5, message = "Rating must not be empty or be more than 5 characters long")
     private String rating;
+
+    @ManyToOne
+    private Category category;
 
     public Cheese(String name, String description, String rating) {
         this.name = name;
@@ -67,12 +69,11 @@ public class Cheese {
         this.rating = rating;
     }
 
-    public CheeseType getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(CheeseType type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
-
 }
