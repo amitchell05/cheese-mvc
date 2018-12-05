@@ -1,9 +1,17 @@
 package com.amitchell05.cheesemvc.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Cheese {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @NotNull
     @Size(min=3, max=15, message = "Name must not be empty or more than 15 characters long")
@@ -19,12 +27,7 @@ public class Cheese {
     @Size(min=1, max=5, message = "Rating must not be empty or more than 5 characters long")
     private String rating;
 
-    private int cheeseId;
-    private static int nextId = 1;
-
     public Cheese(String name, String description, String rating) {
-        // Call the default constructor for the given class
-        this();
         this.name = name;
         this.description = description;
         this.rating = rating;
@@ -33,16 +36,11 @@ public class Cheese {
     // Make no-arg constructor to use nextId to initialize the cheese ID field
     // Ensures it's unique for every single cheese object created
     public Cheese() {
-        cheeseId = nextId;
-        nextId++;
+
     }
 
-    public int getCheeseId() {
-        return cheeseId;
-    }
-
-    public void setCheeseId(int cheeseId) {
-        this.cheeseId = cheeseId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
