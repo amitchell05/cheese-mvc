@@ -48,6 +48,7 @@ public class CheeseController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
+            model.addAttribute("categories", categoryDao.findAll());
             return "cheese/add";
         }
 
@@ -82,6 +83,7 @@ public class CheeseController {
         currentCheese.setDescription(description);
         currentCheese.setCategory(category);
         currentCheese.setRating(rating);
+        cheeseDao.save(currentCheese);
 
         return "redirect:/cheese";
     }
