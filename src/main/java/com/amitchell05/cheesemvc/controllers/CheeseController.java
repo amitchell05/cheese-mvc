@@ -69,10 +69,9 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int cheeseId, String name, String description, Category category, String rating, @ModelAttribute @Valid Cheese currentCheese,
+    public String processEditForm(@PathVariable int cheeseId, String name, String description, @RequestParam int categoryId, String rating, @ModelAttribute @Valid Cheese currentCheese,
                                   Errors errors, Model model) {
 
-        currentCheese = cheeseDao.findOne(cheeseId);
 
         if (errors.hasErrors()) {
             model.addAttribute("categories", categoryDao.findAll());
@@ -80,10 +79,16 @@ public class CheeseController {
             return "cheese/edit";
         }
 
+        currentCheese = cheeseDao.findOne(cheeseId);
+
         currentCheese.setName(name);
         currentCheese.setDescription(description);
-        currentCheese.setCategory(category);
+
+        Category cat = categoryDao.findOne(categoryId);
+        currentCheese.setCategory(cat);
+
         currentCheese.setRating(rating);
+
         cheeseDao.save(currentCheese);
 
         return "redirect:/cheese";
