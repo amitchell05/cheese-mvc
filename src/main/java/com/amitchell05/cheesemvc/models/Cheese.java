@@ -29,6 +29,9 @@ public class Cheese {
     @ManyToOne
     private Category category;
 
+    @ManyToOne
+    private User user;
+
     public Cheese(String name, String description, String rating) {
         this.name = name;
         this.description = description;
@@ -75,5 +78,13 @@ public class Cheese {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
