@@ -93,7 +93,7 @@ public class CheeseController {
         Cheese currentCheese = cheeseDao.findOne(cheeseId);
         model.addAttribute("cheese", currentCheese);
         model.addAttribute("categories", user.getCategories());
-        model.addAttribute("title", "Edit Cheese " + currentCheese.getName() + " (" + cheeseId + ")");
+        model.addAttribute("title", "Edit Cheese " + cheeseDao.findOne(cheeseId).getName() + " (" + cheeseId + ")");
         return "cheese/edit";
     }
 
@@ -108,7 +108,7 @@ public class CheeseController {
         User user = userDao.findByUsername(username).get(0);
         if (errors.hasErrors()) {
             model.addAttribute("categories", user.getCategories());
-            model.addAttribute("title", "Edit Cheese " + currentCheese.getName() + " (" + cheeseId + ")" );
+            model.addAttribute("title", "Edit Cheese " + cheeseDao.findOne(cheeseId).getName() + " (" + cheeseId + ")" );
             return "cheese/edit";
         }
 
