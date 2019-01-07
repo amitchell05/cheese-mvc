@@ -1,10 +1,11 @@
 package com.amitchell05.cheesemvc.models;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,7 +17,7 @@ public class Cheese {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15, message = "Name must not be empty or be more than 15 characters long")
+    @Size(min=3, max=15)
     private String name;
 
     @NotNull
@@ -24,8 +25,8 @@ public class Cheese {
     private String description;
 
     @NotNull
-    @Max(5)
-    private int rating;
+    @Range(min=1, max=5)
+    private Integer rating;
 
     @ManyToOne
     private Category category;
@@ -33,7 +34,7 @@ public class Cheese {
     @ManyToOne
     private User user;
 
-    public Cheese(String name, String description, int rating) {
+    public Cheese(String name, String description, Integer rating) {
         this.name = name;
         this.description = description;
         this.rating = rating;
@@ -65,11 +66,11 @@ public class Cheese {
         this.description = description;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
