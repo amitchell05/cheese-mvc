@@ -93,12 +93,12 @@ public class CheeseController {
         Cheese currentCheese = cheeseDao.findOne(cheeseId);
         model.addAttribute("cheese", currentCheese);
         model.addAttribute("categories", user.getCategories());
-        model.addAttribute("title", "Edit Cheese " + cheeseDao.findOne(cheeseId).getName() + " (" + cheeseId + ")");
+        model.addAttribute("title", "Edit Cheese " + currentCheese.getName() + " (" + cheeseId + ")");
         return "cheese/edit";
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int cheeseId, String name, String description, int categoryId, String rating, @ModelAttribute @Valid Cheese currentCheese,
+    public String processEditForm(@PathVariable int cheeseId, String name, String description, int categoryId, int rating, @ModelAttribute @Valid Cheese currentCheese,
                                   Errors errors, Model model, @CookieValue(value = "user", defaultValue = "none") String username) {
 
         if (username.equals("none")) {

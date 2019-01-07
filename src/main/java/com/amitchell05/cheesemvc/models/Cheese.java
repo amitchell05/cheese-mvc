@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,8 +24,8 @@ public class Cheese {
     private String description;
 
     @NotNull
-    @Size(min=1, max=5, message = "Rating must not be empty or be more than 5 characters long")
-    private String rating;
+    @Max(5)
+    private int rating;
 
     @ManyToOne
     private Category category;
@@ -32,7 +33,7 @@ public class Cheese {
     @ManyToOne
     private User user;
 
-    public Cheese(String name, String description, String rating) {
+    public Cheese(String name, String description, int rating) {
         this.name = name;
         this.description = description;
         this.rating = rating;
@@ -64,11 +65,11 @@ public class Cheese {
         this.description = description;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
