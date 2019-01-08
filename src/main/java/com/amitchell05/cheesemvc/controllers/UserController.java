@@ -35,18 +35,14 @@ public class UserController {
     public String add(Model model, @ModelAttribute @Valid User user, Errors errors, String verify) {
         List<User> sameName = userDao.findByUsername(user.getUsername());
 
-        if (!errors.hasErrors() && user.getPassword().equals(verify) && sameName.isEmpty()) {
+        if (!errors.hasErrors() && sameName.isEmpty()) {
             model.addAttribute("user", user);
             userDao.save(user);
             return "user/index";
         } else {
             model.addAttribute("user", user);
+            user.setPassword("");
             model.addAttribute("title", "User Signup");
-
-            if (!user.getPassword().equals(verify)) {
-                model.addAttribute("message", "Passwords must match");
-                user.setPassword("");
-            }
 
             if (!sameName.isEmpty()) {
                 model.addAttribute("message", "Username already exists");
